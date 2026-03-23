@@ -1,0 +1,47 @@
+.board-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: var(--bg-color);
+  position: relative;
+}
+
+.board-toolbar {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--surface-color);
+  z-index: 10;
+}
+
+.board-canvas {
+  flex: 1;
+  position: relative;
+  overflow: auto;
+}
+
+.board-node {
+  position: absolute;
+  background-color: var(--surface-color);
+  border: 1px solid var(--highlight-blue);
+  padding: 1rem;
+  min-width: 150px;
+  cursor: grab;
+  color: var(--text-color);
+  font-family: var(--font-primary);
+}
+
+.action-btn {
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  padding: 0.5rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.action-btn:hover {
+  border-color: var(--highlight-blue);
+  color: var(--highlight-blue);
+}

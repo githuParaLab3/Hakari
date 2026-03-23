@@ -1,0 +1,10 @@
+<div class="relation-panel-container">
+  <h4>{{ entityType | uppercase }} RELATIONS</h4>
+  <div class="relation-list">
+    <div class="relation-item" *ngFor="let relation of relations">
+      <span class="relation-type">[{{ relation.type }}]</span>
+      <span class="relation-name">{{ relation.name }}</span>
+    </div>
+  </div>
+  <button class="action-btn link-btn">[ + ADD LINK ]</button>
+</div>

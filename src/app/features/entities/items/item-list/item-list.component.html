@@ -1,0 +1,15 @@
+<div class="item-list-container">
+  <header class="section-header">
+    <h2>ITEMS & INVENTORY</h2>
+    <button class="action-btn" (click)="createNewItem()">[ + NEW ITEM ]</button>
+  </header>
+
+  <div class="item-grid">
+    <div *ngFor="let item of items" class="item-card" (click)="openItem(item.id)">
+      <div class="item-meta">
+        <span class="item-value">{{ item.value }} GP</span>
+      </div>
+      <h3>{{ item.name }}</h3>
+    </div>
+  </div>
+</div>

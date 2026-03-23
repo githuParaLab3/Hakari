@@ -1,0 +1,13 @@
+<div class="note-view-container" *ngIf="note">
+  <div class="editor-panel">
+    <header class="note-header">
+      <input type="text" [(ngModel)]="note.title" class="title-input">
+      <span class="type-badge">{{ note.type }}</span>
+    </header>
+    <textarea class="content-area" [(ngModel)]="note.content" placeholder="Content..."></textarea>
+  </div>
+  
+  <div class="relations-panel">
+    <app-relation-panel [entityType]="'note'" [entityId]="note.id"></app-relation-panel>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="resource-view-container" *ngIf="resource">
+  <div class="profile-panel">
+    <header class="resource-header">
+      <input type="text" [(ngModel)]="resource.title" class="title-input">
+      <input type="text" [(ngModel)]="resource.type" placeholder="Type..." class="type-input">
+    </header>
+    <div class="inputs-wrapper">
+      <input type="text" [(ngModel)]="resource.external_url" placeholder="External URL..." class="data-input">
+      <textarea [(ngModel)]="resource.description" placeholder="Description..." class="description-area"></textarea>
+    </div>
+  </div>
+</div>

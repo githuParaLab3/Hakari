@@ -1,0 +1,14 @@
+<div class="map-view-container" *ngIf="mapData">
+  <div class="profile-panel">
+    <header class="map-header">
+      <input type="text" [(ngModel)]="mapData.name" class="name-input">
+      <input type="text" [(ngModel)]="mapData.type" placeholder="Map Type..." class="type-input">
+    </header>
+    <div class="image-url-wrapper">
+      <input type="text" [(ngModel)]="mapData.image_url" placeholder="Image URL..." class="url-input">
+    </div>
+  </div>
+  <div class="relations-panel">
+    <h4>LINKED LOCATIONS</h4>
+  </div>
+</div>

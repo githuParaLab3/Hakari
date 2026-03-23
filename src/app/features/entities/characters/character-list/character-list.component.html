@@ -1,0 +1,16 @@
+<div class="character-list-container">
+  <header class="section-header">
+    <h2>PLAYER CHARACTERS</h2>
+    <button class="action-btn" (click)="createNewCharacter()">[ + NEW CHARACTER ]</button>
+  </header>
+
+  <div class="character-grid">
+    <div *ngFor="let character of characters" class="character-card" (click)="openCharacter(character.id)">
+      <div class="character-meta">
+        <span class="character-class">{{ character.class }}</span>
+        <span class="character-level">LVL {{ character.level || 1 }}</span>
+      </div>
+      <h3>{{ character.name }}</h3>
+    </div>
+  </div>
+</div>

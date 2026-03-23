@@ -1,0 +1,8 @@
+<div class="monster-view-container" *ngIf="monster">
+  <div class="profile-panel">
+    <header class="monster-header">
+      <input type="text" [(ngModel)]="monster.name" class="name-input">
+    </header>
+    <textarea class="description-area" [(ngModel)]="monster.description" placeholder="Monster stats and details..."></textarea>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="encounter-view-container" *ngIf="encounter">
+  <div class="profile-panel">
+    <header class="encounter-header">
+      <input type="text" [(ngModel)]="encounter.name" class="name-input">
+      <input type="text" [(ngModel)]="encounter.difficulty" placeholder="Difficulty..." class="difficulty-input">
+    </header>
+    <textarea class="description-area" [(ngModel)]="encounter.description" placeholder="Encounter details..."></textarea>
+  </div>
+  <div class="relations-panel">
+    <h4>ENTITIES INVOLVED</h4>
+  </div>
+</div>

@@ -1,0 +1,71 @@
+.note-view-container {
+  display: grid;
+  grid-template-columns: 1fr 250px;
+  gap: 2rem;
+  height: 100%;
+}
+
+.editor-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+}
+
+.note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.title-input {
+  background: transparent;
+  border: none;
+  color: var(--highlight-blue);
+  font-size: 1.5rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  width: 100%;
+  outline: none;
+}
+
+.type-badge {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--bg-color);
+  background-color: var(--highlight-blue);
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+.content-area {
+  flex: 1;
+  width: 100%;
+  resize: none;
+  padding: 1rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  font-family: var(--font-primary);
+  line-height: 1.6;
+}
+
+.content-area:focus {
+  border-color: var(--highlight-blue);
+}
+
+.relations-panel {
+  border-left: 1px solid var(--border-color);
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.relations-panel h4 {
+  color: var(--highlight-green);
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}

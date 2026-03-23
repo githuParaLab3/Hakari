@@ -1,0 +1,12 @@
+<div class="monster-list-container">
+  <header class="section-header">
+    <h2>MONSTER COMPENDIUM</h2>
+    <button class="action-btn" (click)="createNewMonster()">[ + NEW MONSTER ]</button>
+  </header>
+
+  <div class="monster-grid">
+    <div *ngFor="let monster of monsters" class="monster-card" (click)="openMonster(monster.id)">
+      <h3>{{ monster.name }}</h3>
+    </div>
+  </div>
+</div>

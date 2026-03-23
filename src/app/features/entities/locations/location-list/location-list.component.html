@@ -1,0 +1,15 @@
+<div class="location-list-container">
+  <header class="section-header">
+    <h2>LOCATIONS</h2>
+    <button class="action-btn" (click)="createNewLocation()">[ + NEW LOCATION ]</button>
+  </header>
+
+  <div class="location-grid">
+    <div *ngFor="let location of locations" class="location-card" (click)="openLocation(location.id)">
+      <div class="location-meta">
+        <span class="location-type">{{ location.type }}</span>
+      </div>
+      <h3>{{ location.name }}</h3>
+    </div>
+  </div>
+</div>

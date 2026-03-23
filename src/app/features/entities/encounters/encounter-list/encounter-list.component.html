@@ -1,0 +1,15 @@
+<div class="encounter-list-container">
+  <header class="section-header">
+    <h2>ENCOUNTERS</h2>
+    <button class="action-btn" (click)="createNewEncounter()">[ + NEW ENCOUNTER ]</button>
+  </header>
+
+  <div class="encounter-grid">
+    <div *ngFor="let encounter of encounters" class="encounter-card" (click)="openEncounter(encounter.id)">
+      <div class="encounter-meta">
+        <span class="encounter-difficulty">{{ encounter.difficulty }}</span>
+      </div>
+      <h3>{{ encounter.name }}</h3>
+    </div>
+  </div>
+</div>

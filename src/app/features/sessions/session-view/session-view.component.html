@@ -1,0 +1,13 @@
+<div class="session-view-container" *ngIf="session">
+  <div class="left-panel">
+    <app-relation-panel [entityType]="'session'" [entityId]="session.id"></app-relation-panel>
+  </div>
+  
+  <div class="center-panel">
+    <header class="session-header">
+      <h2>#{{ session.number }} - {{ session.title }}</h2>
+      <span class="date">{{ session.date | date:'shortDate' }}</span>
+    </header>
+    <textarea class="editor-area" [(ngModel)]="session.summary" placeholder="Session notes..."></textarea>
+  </div>
+</div>

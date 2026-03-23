@@ -1,0 +1,16 @@
+<div class="note-list-container">
+  <header class="section-header">
+    <h2>KNOWLEDGE BASE</h2>
+    <button class="action-btn" (click)="createNewNote()">[ + NEW NOTE ]</button>
+  </header>
+
+  <div class="note-grid">
+    <div *ngFor="let note of notes" class="note-card" (click)="openNote(note.id)">
+      <div class="note-meta">
+        <span class="note-type">{{ note.type }}</span>
+        <span class="note-date">{{ note.updated_at | date:'shortDate' }}</span>
+      </div>
+      <h3>{{ note.title }}</h3>
+    </div>
+  </div>
+</div>

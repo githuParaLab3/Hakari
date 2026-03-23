@@ -1,0 +1,46 @@
+.monster-view-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  height: 100%;
+}
+
+.profile-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: 100%;
+}
+
+.monster-header {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.name-input {
+  background: transparent;
+  border: none;
+  color: var(--highlight-red);
+  font-size: 2rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  width: 100%;
+  outline: none;
+}
+
+.description-area {
+  flex: 1;
+  width: 100%;
+  resize: none;
+  padding: 1rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  font-family: var(--font-primary);
+  line-height: 1.6;
+}
+
+.description-area:focus {
+  border-color: var(--highlight-red);
+}

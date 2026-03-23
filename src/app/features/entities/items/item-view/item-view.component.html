@@ -1,0 +1,16 @@
+<div class="item-view-container" *ngIf="item">
+  <div class="profile-panel">
+    <header class="item-header">
+      <input type="text" [(ngModel)]="item.name" class="name-input">
+      <div class="value-wrapper">
+        <input type="number" [(ngModel)]="item.value" class="value-input">
+        <span>GP</span>
+      </div>
+    </header>
+    <textarea class="description-area" [(ngModel)]="item.description" placeholder="Item description..."></textarea>
+  </div>
+  <div class="relations-panel">
+    <h4>OWNED BY</h4>
+    <h4>LINKED NOTES</h4>
+  </div>
+</div>

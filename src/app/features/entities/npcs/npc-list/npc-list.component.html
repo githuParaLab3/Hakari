@@ -1,0 +1,17 @@
+<div class="npc-list-container">
+  <header class="section-header">
+    <h2>NON-PLAYER CHARACTERS</h2>
+    <button class="action-btn" (click)="createNewNpc()">[ + NEW NPC ]</button>
+  </header>
+
+  <div class="npc-grid">
+    <div *ngFor="let npc of npcs" class="npc-card" (click)="openNpc(npc.id)">
+      <div class="npc-meta">
+        <span class="npc-role">{{ npc.role }}</span>
+        <span class="npc-status" *ngIf="npc.status">{{ npc.status }}</span>
+      </div>
+      <h3>{{ npc.name }}</h3>
+      <span class="enemy-badge" *ngIf="npc.is_enemy">HOSTILE</span>
+    </div>
+  </div>
+</div>

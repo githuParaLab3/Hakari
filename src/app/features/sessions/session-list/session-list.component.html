@@ -1,0 +1,17 @@
+<div class="session-list-container">
+  <header class="section-header">
+    <h2>SESSIONS TIMELINE</h2>
+    <button class="action-btn" (click)="createNewSession()">[ + NEW SESSION ]</button>
+  </header>
+
+  <div class="session-grid">
+    <div *ngFor="let session of sessions" class="session-card" (click)="openSession(session.id)">
+      <div class="session-meta">
+        <span class="session-number">#{{ session.number }}</span>
+        <span class="session-date">{{ session.date | date:'shortDate' }}</span>
+      </div>
+      <h3>{{ session.title }}</h3>
+      <p>{{ session.summary }}</p>
+    </div>
+  </div>
+</div>

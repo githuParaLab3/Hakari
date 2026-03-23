@@ -1,0 +1,15 @@
+<div class="resource-list-container">
+  <header class="section-header">
+    <h2>EXTERNAL RESOURCES</h2>
+    <button class="action-btn" (click)="createNewResource()">[ + NEW RESOURCE ]</button>
+  </header>
+
+  <div class="resource-grid">
+    <div *ngFor="let resource of resources" class="resource-card" (click)="openResource(resource.id)">
+      <div class="resource-meta">
+        <span>{{ resource.type }}</span>
+      </div>
+      <h3>{{ resource.title }}</h3>
+    </div>
+  </div>
+</div>

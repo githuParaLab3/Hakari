@@ -1,0 +1,73 @@
+.location-view-container {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+  height: 100%;
+}
+
+.profile-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: 100%;
+}
+
+.location-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.name-input {
+  background: transparent;
+  border: none;
+  color: var(--highlight-green);
+  font-size: 1.8rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  width: 100%;
+  outline: none;
+}
+
+.type-input {
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  font-size: 1rem;
+  font-family: var(--font-mono);
+  width: 100%;
+  outline: none;
+  opacity: 0.7;
+}
+
+.description-area {
+  flex: 1;
+  width: 100%;
+  resize: none;
+  padding: 1rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  font-family: var(--font-primary);
+  line-height: 1.6;
+}
+
+.description-area:focus {
+  border-color: var(--highlight-green);
+}
+
+.relations-panel {
+  border-left: 1px solid var(--border-color);
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.relations-panel h4 {
+  color: var(--highlight-blue);
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}

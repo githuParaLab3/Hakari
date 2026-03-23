@@ -1,0 +1,19 @@
+<div class="character-view-container" *ngIf="character">
+  <div class="profile-panel">
+    <header class="character-header">
+      <input type="text" [(ngModel)]="character.name" class="name-input">
+      <div class="stats-wrapper">
+        <input type="text" [(ngModel)]="character.class" placeholder="Class" class="stat-input">
+        <div class="level-box">
+          <span>LVL</span>
+          <input type="number" [(ngModel)]="character.level" class="level-input">
+        </div>
+      </div>
+    </header>
+    <textarea class="backstory-area" [(ngModel)]="character.backstory" placeholder="Backstory..."></textarea>
+  </div>
+  <div class="relations-panel">
+    <h4>INVENTORY</h4>
+    <h4>LINKED NOTES</h4>
+  </div>
+</div>

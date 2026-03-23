@@ -1,0 +1,12 @@
+<div class="location-view-container" *ngIf="location">
+  <div class="profile-panel">
+    <header class="location-header">
+      <input type="text" [(ngModel)]="location.name" class="name-input">
+      <input type="text" [(ngModel)]="location.type" placeholder="Type..." class="type-input">
+    </header>
+    <textarea class="description-area" [(ngModel)]="location.description" placeholder="Location description..."></textarea>
+  </div>
+  <div class="relations-panel">
+    <app-relation-panel [entityType]="'location'" [entityId]="location.id"></app-relation-panel>
+  </div>
+</div>

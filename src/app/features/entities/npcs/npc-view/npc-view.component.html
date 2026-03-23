@@ -1,0 +1,20 @@
+<div class="npc-view-container" *ngIf="npc">
+  <div class="profile-panel">
+    <header class="npc-header">
+      <input type="text" [(ngModel)]="npc.name" class="name-input">
+      <div class="status-toggles">
+        <label>
+          <input type="checkbox" [(ngModel)]="npc.is_enemy"> Hostile
+        </label>
+      </div>
+    </header>
+    <div class="npc-details">
+      <input type="text" [(ngModel)]="npc.role" placeholder="Role..." class="detail-input">
+      <input type="text" [(ngModel)]="npc.status" placeholder="Status..." class="detail-input">
+    </div>
+    <textarea class="description-area" [(ngModel)]="npc.description" placeholder="Description..."></textarea>
+  </div>
+  <div class="relations-panel">
+    <app-relation-panel [entityType]="'npc'" [entityId]="npc.id"></app-relation-panel>
+  </div>
+</div>
