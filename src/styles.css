@@ -2,14 +2,25 @@
 
 :root {
   --bg-color: #0A0A0A;
-  --surface-color: #1A1A1A;
-  --border-color: #2A2A2A;
+  --surface-color: #141414;
+  --surface-hover: #1F1F1F;
+  --border-color: #262626;
   --text-color: #E5E5E5;
   --highlight-blue: #4DA3FF;
-  --highlight-green: #6EE7B7;
+  --highlight-green: #A3F7E5;
   --highlight-red: #FF6B6B;
   --font-primary: 'Inter', sans-serif;
   --font-mono: 'Roboto Mono', monospace;
+}
+
+[data-theme='light'] {
+  --bg-color: #F8F9FA;
+  --surface-color: #FFFFFF;
+  --surface-hover: #F1F3F5;
+  --border-color: #DEE2E6;
+  --text-color: #212529;
+  --highlight-blue: #228BE6;
+  --highlight-green: #099268;
 }
 
 body {
@@ -17,33 +28,21 @@ body {
   color: var(--text-color);
   font-family: var(--font-primary);
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  background-image: linear-gradient(var(--border-color) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-position: -1px -1px;
+  transition: background-color 0.3s ease;
+  background-image: linear-gradient(var(--border-color) 0.5px, transparent 0.5px),
+    linear-gradient(90deg, var(--border-color) 0.5px, transparent 0.5px);
+  background-size: 50px 50px;
 }
 
-*, *::before, *::after {
-  box-sizing: inherit;
-}
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin: 0;
-}
-
-button, input, select, textarea {
+button, input {
   font-family: inherit;
   background-color: var(--surface-color);
   border: 1px solid var(--border-color);
   color: var(--text-color);
-  outline: none;
+  border-radius: 4px;
+  transition: all 0.2s ease;
 }
 
-button:focus, input:focus, select:focus, textarea:focus {
-  border-color: var(--highlight-blue);
-}
+button:hover { background-color: var(--surface-hover); border-color: var(--text-color); cursor: pointer; }

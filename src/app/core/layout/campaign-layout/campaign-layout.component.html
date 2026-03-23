@@ -1,26 +1,84 @@
 <div class="campaign-wrapper">
-  <aside class="sidebar">
-    <div class="brand">THREAD</div>
+  <aside class="sidebar" [class.collapsed]="isSidebarCollapsed">
+    <div class="brand-box">
+      <span class="brand-text">THREAD</span>
+    </div>
     <nav class="nav-menu">
-      <a routerLink="/dashboard" class="nav-item">Dashboard</a>
-      <a routerLink="./" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-      <a routerLink="sessions" class="nav-item" routerLinkActive="active">Sessions</a>
-      <a routerLink="notes" class="nav-item" routerLinkActive="active">Notes</a>
-      <a routerLink="npcs" class="nav-item" routerLinkActive="active">NPCs</a>
-      <a routerLink="locations" class="nav-item" routerLinkActive="active">Locations</a>
-      <a routerLink="items" class="nav-item" routerLinkActive="active">Items</a>
-      <a routerLink="characters" class="nav-item" routerLinkActive="active">Characters</a>
-      <a routerLink="encounters" class="nav-item" routerLinkActive="active">Encounters</a>
-      <a routerLink="monsters" class="nav-item" routerLinkActive="active">Monsters</a>
-      <a routerLink="maps" class="nav-item" routerLinkActive="active">Maps</a>
-      <a routerLink="resources" class="nav-item" routerLinkActive="active">Resources</a>
+      <a routerLink="/dashboard" class="nav-item">
+        <span class="material-symbols-outlined">dashboard</span>
+        <label>Dashboard</label>
+      </a>
+      <a routerLink="./" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <span class="material-symbols-outlined">home</span>
+        <label>Home</label>
+      </a>
+      <a routerLink="sessions" class="nav-item" routerLinkActive="active">
+        <span class="material-symbols-outlined">history</span>
+        <label>Sessions</label>
+      </a>
+      <a routerLink="notes" class="nav-item" routerLinkActive="active">
+        <span class="material-symbols-outlined">description</span>
+        <label>Notes</label>
+      </a>
+      <a routerLink="npcs" class="nav-item" routerLinkActive="active">
+        <span class="material-symbols-outlined">person</span>
+        <label>NPCs</label>
+      </a>
+      <a routerLink="locations" class="nav-item" routerLinkActive="active">
+        <span class="material-symbols-outlined">distance</span>
+        <label>Locations</label>
+      </a>
+      <a routerLink="items" class="nav-item" routerLinkActive="active">
+        <span class="material-symbols-outlined">swords</span>
+        <label>Items</label>
+      </a>
+      <a routerLink="characters" class="nav-item" routerLinkActive="active">
+        <span class="material-symbols-outlined">shield</span>
+        <label>Characters</label>
+      </a>
+      <a routerLink="encounters" class="nav-item" routerLinkActive="active">
+        <span class="material-symbols-outlined">skull</span>
+        <label>Encounters</label>
+      </a>
+      <a routerLink="monsters" class="nav-item" routerLinkActive="active">
+        <span class="material-symbols-outlined">pets</span>
+        <label>Monsters</label>
+      </a>
+      <a routerLink="maps" class="nav-item" routerLinkActive="active">
+        <span class="material-symbols-outlined">map</span>
+        <label>Maps</label>
+      </a>
+      <a routerLink="resources" class="nav-item" routerLinkActive="active">
+        <span class="material-symbols-outlined">folder_open</span>
+        <label>Resources</label>
+      </a>
     </nav>
   </aside>
 
   <main class="main-content">
     <header class="top-bar">
-      <button class="action-btn" (click)="toggleSidePanel()">[ PANEL ]</button>
+      <div class="top-left">
+        <button class="icon-btn" (click)="toggleSidebar()">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+        <button class="icon-btn" (click)="themeService.toggle()">
+          <span class="material-symbols-outlined">
+            {{ themeService.current === 'dark' ? 'light_mode' : 'dark_mode' }}
+          </span>
+        </button>
+      </div>
+
+      <div class="search-box">
+        <input type="text" placeholder="SEARCH..." class="search-input">
+      </div>
+
+      <div class="top-right">
+        <button class="icon-btn" (click)="toggleSidePanel()">
+          <span class="material-symbols-outlined">side_navigation</span>
+        </button>
+      </div>
     </header>
+
     <div class="content-area">
       <router-outlet></router-outlet>
     </div>
@@ -29,27 +87,17 @@
   <aside class="side-panel" [class.open]="isSidePanelOpen">
     <div class="panel-header">
       <span>CONTEXT MANAGER</span>
-      <button class="close-btn" (click)="closePanel()">X</button>
+      <button class="close-btn" (click)="closePanel()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
     </div>
-    <div class="panel-content">
-      <div *ngIf="activeContext; else emptyContext">
-        <div class="context-type">{{ activeContext.type | uppercase }}</div>
-        <h3 class="context-title">{{ activeContext.data.name || activeContext.data.title }}</h3>
-        <div class="context-details">
-          <p *ngIf="activeContext.data.description">{{ activeContext.data.description }}</p>
-          <p *ngIf="activeContext.data.role">Role: {{ activeContext.data.role }}</p>
-          <p *ngIf="activeContext.data.status">Status: {{ activeContext.data.status }}</p>
-          <p *ngIf="activeContext.data.value">Value: {{ activeContext.data.value }}</p>
-          <p *ngIf="activeContext.data.difficulty">Difficulty: {{ activeContext.data.difficulty }}</p>
-        </div>
-        <button class="action-btn full-view-btn" [routerLink]="['../', activeContext.type, activeContext.data.id]">
-          [ OPEN FULL VIEW ]
-        </button>
-      </div>
-      <ng-template #emptyContext>
-        <div class="empty-state">NO CONTEXT SELECTED</div>
-      </ng-template>
-      <ng-content select="[side-panel-content]"></ng-content>
+    <div class="panel-content" *ngIf="activeContext">
+      <div class="context-type">{{ activeContext.type | uppercase }}</div>
+      <h3 class="context-title">{{ activeContext.data.name || activeContext.data.title }}</h3>
+      <p class="context-desc">{{ activeContext.data.description }}</p>
+      <button class="full-view-btn" [routerLink]="['../', activeContext.type, activeContext.data.id]">
+        OPEN PROFILE
+      </button>
     </div>
   </aside>
 </div>

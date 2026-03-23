@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ContextService } from '../../context.service';
+import { ThemeService } from '../../theme.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -13,10 +14,14 @@ import { Subscription } from 'rxjs';
 })
 export class CampaignLayoutComponent implements OnInit, OnDestroy {
   isSidePanelOpen = false;
+  isSidebarCollapsed = false;
   activeContext: any = null;
   private contextSub!: Subscription;
 
-  constructor(private contextService: ContextService) {}
+  constructor(
+    private contextService: ContextService,
+    public themeService: ThemeService
+  ) {}
 
   ngOnInit() {
     this.contextSub = this.contextService.activeContext$.subscribe(context => {
@@ -31,6 +36,10 @@ export class CampaignLayoutComponent implements OnInit, OnDestroy {
     if (this.contextSub) {
       this.contextSub.unsubscribe();
     }
+  }
+
+  toggleSidebar() {
+    this.isSidebarCollapsed = !this.isSidebarCollapsed;
   }
 
   toggleSidePanel() {

@@ -1,0 +1,15 @@
+<div class="modal-overlay" (click)="onClose()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <header class="modal-header">
+      <h3>{{ title | uppercase }}</h3>
+      <button class="close-btn" (click)="onClose()">[X]</button>
+    </header>
+    <div class="modal-content">
+      <ng-content></ng-content>
+    </div>
+    <footer class="modal-footer">
+      <button class="action-btn cancel" (click)="onClose()">CANCEL</button>
+      <button class="action-btn confirm" (click)="onConfirm()">CONFIRM</button>
+    </footer>
+  </div>
+</div>

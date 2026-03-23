@@ -1,0 +1,68 @@
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal-container {
+  background-color: var(--surface-color);
+  border: 1px solid var(--highlight-blue);
+  width: 500px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 20px rgba(77, 163, 255, 0.2);
+}
+
+.modal-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  color: var(--highlight-blue);
+  font-family: var(--font-mono);
+  margin: 0;
+}
+
+.modal-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal-footer {
+  padding: 1rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.action-btn {
+  background: transparent;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+}
+
+.action-btn.confirm {
+  border-color: var(--highlight-green);
+  color: var(--highlight-green);
+}
+
+.action-btn.confirm:hover {
+  background-color: rgba(0, 255, 136, 0.1);
+}
