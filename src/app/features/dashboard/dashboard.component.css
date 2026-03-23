@@ -1,50 +1,97 @@
-.dashboard-container {
+.page-container {
+  padding: 40px 32px;
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
+  overflow-y: auto;
 }
 
-.dashboard-header {
+.page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
   border-bottom: 1px solid var(--border-color);
-  padding-bottom: 1rem;
+  padding-bottom: 16px;
+  margin-bottom: 32px;
+}
+
+.page-header h2 {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin: 0;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.btn-primary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: var(--surface-color);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: 0.9rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--surface-hover);
+  border-color: var(--border-focus);
 }
 
 .campaign-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+  gap: 24px;
 }
 
 .campaign-card {
-  background-color: var(--surface-color);
-  border: 1px solid var(--border-color);
-  padding: 1.5rem;
-  cursor: pointer;
-  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
 }
 
-.campaign-card:hover {
-  border-color: var(--highlight-blue);
-  transform: translateY(-2px);
+.campaign-title {
+  font-size: 1.2rem;
+  margin: 0 0 8px 0;
+  color: var(--text-primary);
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: normal;
 }
 
-.campaign-card h3 {
-  color: var(--highlight-blue);
-  margin-bottom: 0.5rem;
-}
-
-.campaign-card p {
+.campaign-desc {
   font-size: 0.9rem;
-  color: var(--text-color);
-  opacity: 0.8;
-  margin-bottom: 1rem;
+  color: var(--text-secondary);
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+  flex: 1;
 }
 
-.date {
+.campaign-date {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--highlight-green);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  padding-top: 12px;
+  border-top: 1px dashed var(--border-color);
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 0;
+  color: var(--text-secondary);
+}
+
+.empty-state .material-symbols-outlined {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
 }

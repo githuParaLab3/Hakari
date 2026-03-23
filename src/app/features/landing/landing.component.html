@@ -1,0 +1,84 @@
+<div class="landing-wrapper">
+  <header class="landing-topbar">
+    <div class="brand-group" style="cursor: pointer;" routerLink="/">
+      <span class="brand-kanji">計</span>
+      <span class="brand-text">HAKARI</span>
+    </div>
+    <nav class="topbar-nav">
+      <button class="icon-btn" (click)="themeService.toggle()">
+        <span class="material-symbols-outlined">
+          {{ themeService.current === 'dark' ? 'light_mode' : 'dark_mode' }}
+        </span>
+      </button>
+      <button *ngIf="!isLoggedIn" class="btn-primary" routerLink="/login">Get Started</button>
+      <button *ngIf="isLoggedIn" class="btn-primary" routerLink="/dashboard">Access Dashboard</button>
+    </nav>
+  </header>
+
+  <main class="landing-content">
+    <section class="hero-section">
+      <div class="hero-text">
+        <span class="system-badge">CAMPAIGN MANAGEMENT PLATFORM</span>
+        <h1 class="hero-title">Absolute control over your RPG campaign.</h1>
+        <p class="hero-subtitle">
+          Hakari is the definitive tool for Game Masters to organize sessions, manage entities, and document the game universe within a single interconnected database.
+        </p>
+        <div class="hero-actions">
+          <button *ngIf="!isLoggedIn" class="btn-primary large-btn" routerLink="/login">
+            Initialize System
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
+          <button *ngIf="isLoggedIn" class="btn-primary large-btn" routerLink="/dashboard">
+            Enter Dashboard
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="features-section">
+      <div class="section-header">
+        <h2>How Hakari Works</h2>
+        <p>Data structure designed for complex campaigns.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <span class="material-symbols-outlined">public</span>
+          </div>
+          <h3>Global Database</h3>
+          <p>Register NPCs, Monsters, Items, and Locations. Build your world's lore in a structured format accessible at any point in the narrative.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <span class="material-symbols-outlined">view_timeline</span>
+          </div>
+          <h3>Session Control</h3>
+          <p>Maintain a chronological log of each played session. Plan tactical encounters, log results, and track character progression.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <span class="material-symbols-outlined">hub</span>
+          </div>
+          <h3>Entity Networking</h3>
+          <p>Establish direct links between notes, characters, and locations, creating an easily navigable web of intelligence during live gameplay.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="landing-footer">
+    <div class="footer-content">
+      <div class="brand-group small">
+        <span class="brand-kanji">計</span>
+        <span class="brand-text">HAKARI</span>
+      </div>
+      <div class="footer-links">
+        <span class="version-tag">v1.0.0-beta</span>
+      </div>
+    </div>
+  </footer>
+</div>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { CampaignService } from '../campaigns/campaign.service';
 import { AuthService } from '../../core/auth.service';
+import { ThemeService } from '../../core/theme.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +19,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private campaignService: CampaignService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    public themeService: ThemeService
   ) {}
 
   async ngOnInit() {
@@ -46,5 +48,10 @@ export class DashboardComponent implements OnInit {
 
   openCampaign(id: string) {
     this.router.navigate(['/campaign', id]);
+  }
+
+  async logout() {
+    await this.authService.signOut();
+    this.router.navigate(['/login']);
   }
 }

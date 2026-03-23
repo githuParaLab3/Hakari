@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-campaign-home',
   standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './campaign-home.component.html',
   styleUrls: ['./campaign-home.component.css']
 })

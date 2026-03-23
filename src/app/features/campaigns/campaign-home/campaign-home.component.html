@@ -1,16 +1,20 @@
-<div class="campaign-home-container">
-  <header class="section-header">
-    <h2>CAMPAIGN HUB</h2>
-    <span class="id-tag">ID: {{ campaignId }}</span>
-  </header>
+<div class="page-container">
+  <div class="page-header">
+    <h2>Campaign Hub</h2>
+    <span class="hakari-badge">ID: {{ campaignId }}</span>
+  </div>
 
-  <div class="grid-layout">
-    <section class="module-panel">
-      <h3>SESSIONS</h3>
+  <div class="hakari-grid">
+    <section class="hakari-card module-card">
+      <span class="material-symbols-outlined icon-large">view_timeline</span>
+      <h3>Sessions</h3>
+      <p>Manage timeline and events.</p>
     </section>
 
-    <section class="module-panel">
-      <h3>GLOBAL LORE</h3>
+    <section class="hakari-card module-card">
+      <span class="material-symbols-outlined icon-large">public</span>
+      <h3>Global Lore</h3>
+      <p>Access notes, NPCs, and locations.</p>
     </section>
   </div>
 </div>

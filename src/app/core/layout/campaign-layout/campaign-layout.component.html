@@ -1,56 +1,56 @@
 <div class="campaign-wrapper">
   <aside class="sidebar" [class.collapsed]="isSidebarCollapsed">
-    <div class="brand-box">
+    <div class="brand-box" routerLink="/" style="cursor: pointer;">
       <span class="brand-kanji">計</span>
       <span class="brand-text">HAKARI</span>
     </div>
     <nav class="nav-menu">
       <a routerLink="/dashboard" class="nav-item">
-        <span>▤</span>
+        <span class="material-symbols-outlined">dashboard</span>
         <label>Dashboard</label>
       </a>
       <a routerLink="./" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-        <span>⌂</span>
+        <span class="material-symbols-outlined">home</span>
         <label>Home</label>
       </a>
       <a routerLink="sessions" class="nav-item" routerLinkActive="active">
-        <span>📅</span>
+        <span class="material-symbols-outlined">view_timeline</span>
         <label>Sessions</label>
       </a>
       <a routerLink="notes" class="nav-item" routerLinkActive="active">
-        <span>📝</span>
+        <span class="material-symbols-outlined">description</span>
         <label>Notes</label>
       </a>
       <a routerLink="npcs" class="nav-item" routerLinkActive="active">
-        <span>👤</span>
+        <span class="material-symbols-outlined">group</span>
         <label>NPCs</label>
       </a>
       <a routerLink="locations" class="nav-item" routerLinkActive="active">
-        <span>📍</span>
+        <span class="material-symbols-outlined">map</span>
         <label>Locations</label>
       </a>
       <a routerLink="items" class="nav-item" routerLinkActive="active">
-        <span>⚔</span>
+        <span class="material-symbols-outlined">category</span>
         <label>Items</label>
       </a>
       <a routerLink="characters" class="nav-item" routerLinkActive="active">
-        <span>🛡</span>
+        <span class="material-symbols-outlined">badge</span>
         <label>Characters</label>
       </a>
       <a routerLink="encounters" class="nav-item" routerLinkActive="active">
-        <span>🔥</span>
+        <span class="material-symbols-outlined">swords</span>
         <label>Encounters</label>
       </a>
       <a routerLink="monsters" class="nav-item" routerLinkActive="active">
-        <span>👹</span>
+        <span class="material-symbols-outlined">bug_report</span>
         <label>Monsters</label>
       </a>
       <a routerLink="maps" class="nav-item" routerLinkActive="active">
-        <span>🗺</span>
+        <span class="material-symbols-outlined">grid_on</span>
         <label>Maps</label>
       </a>
       <a routerLink="resources" class="nav-item" routerLinkActive="active">
-        <span>📂</span>
+        <span class="material-symbols-outlined">folder_open</span>
         <label>Resources</label>
       </a>
     </nav>
@@ -59,18 +59,27 @@
   <main class="main-content">
     <header class="top-bar">
       <div class="top-left">
-        <button class="icon-btn" (click)="toggleSidebar()">☰</button>
+        <button class="icon-btn" (click)="toggleSidebar()">
+          <span class="material-symbols-outlined">
+            {{ isSidebarCollapsed ? 'menu' : 'menu_open' }}
+          </span>
+        </button>
         <button class="icon-btn" (click)="themeService.toggle()">
-          {{ themeService.current === 'dark' ? '○' : '●' }}
+          <span class="material-symbols-outlined">
+            {{ themeService.current === 'dark' ? 'light_mode' : 'dark_mode' }}
+          </span>
         </button>
       </div>
 
       <div class="search-box">
+        <span class="material-symbols-outlined search-icon">search</span>
         <input type="text" placeholder="SEARCH ENTITIES..." class="search-input">
       </div>
 
       <div class="top-right">
-        <button class="icon-btn" (click)="toggleSidePanel()">▨</button>
+        <button class="icon-btn" (click)="toggleSidePanel()" [class.active]="isSidePanelOpen">
+          <span class="material-symbols-outlined">right_panel_open</span>
+        </button>
       </div>
     </header>
 
@@ -81,14 +90,33 @@
 
   <aside class="side-panel" [class.open]="isSidePanelOpen">
     <div class="panel-header">
-      <span>CONTEXT MANAGER</span>
-      <button class="close-btn" (click)="closePanel()">✕</button>
+      <div class="panel-title-group">
+        <span class="material-symbols-outlined">memory</span>
+        <span>CONTEXT MANAGER</span>
+      </div>
+      <button class="close-btn" (click)="closePanel()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
     </div>
     <div class="panel-content" *ngIf="activeContext">
-      <div class="context-type">{{ activeContext.type | uppercase }}</div>
+      <div class="context-type hakari-badge">{{ activeContext.type | uppercase }}</div>
       <h3 class="context-title">{{ activeContext.data.name || activeContext.data.title }}</h3>
+      
+      <div class="context-meta" *ngIf="activeContext.data.role || activeContext.data.status">
+        <div class="meta-row" *ngIf="activeContext.data.role">
+          <span class="meta-label">ROLE</span>
+          <span class="meta-value">{{ activeContext.data.role }}</span>
+        </div>
+        <div class="meta-row" *ngIf="activeContext.data.status">
+          <span class="meta-label">STATUS</span>
+          <span class="meta-value status-indicator">{{ activeContext.data.status | uppercase }}</span>
+        </div>
+      </div>
+
       <p class="context-desc">{{ activeContext.data.description }}</p>
+      
       <button class="full-view-btn" [routerLink]="['../', activeContext.type, activeContext.data.id]">
+        <span class="material-symbols-outlined">open_in_new</span>
         OPEN FULL PROFILE
       </button>
     </div>

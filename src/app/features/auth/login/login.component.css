@@ -1,42 +1,137 @@
-.login-container {
+.login-layout {
   display: flex;
-  height: 100vh;
-  width: 100vw;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  min-height: 100vh;
   background-color: var(--bg-color);
 }
 
-.login-box {
+.login-topbar {
+  height: 64px;
+  background-color: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+}
+
+.brand-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-kanji {
+  font-family: var(--font-mono);
+  font-size: 1.8rem;
+  color: var(--highlight-primary);
+}
+
+.brand-text {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.icon-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.icon-btn:hover {
+  background-color: var(--surface-hover);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.login-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
   background-color: var(--surface-color);
   border: 1px solid var(--border-color);
-  padding: 3rem;
-  text-align: center;
+  border-radius: var(--radius-md);
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
 }
 
-h1 {
-  color: var(--highlight-blue);
-  font-size: 2rem;
-  letter-spacing: 0.3em;
+.card-header {
+  padding: 32px 32px 24px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
 }
 
-.action-btn {
-  background: transparent;
-  color: var(--text-color);
+.card-header h1 {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.card-header p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.card-body {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn-primary {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px;
+  background-color: var(--surface-elevated);
+  color: var(--text-primary);
   border: 1px solid var(--border-color);
-  padding: 1rem 2rem;
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  cursor: pointer;
-  text-transform: uppercase;
-  transition: all 0.2s;
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  border-radius: var(--radius-sm);
 }
 
-.action-btn:hover {
-  border-color: var(--highlight-blue);
-  color: var(--highlight-blue);
-  background-color: rgba(77, 163, 255, 0.1);
+.btn-primary:hover {
+  background-color: var(--surface-hover);
+  border-color: var(--border-focus);
+}
+
+.error-msg {
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: var(--highlight-secondary);
+  background-color: rgba(227, 80, 80, 0.1);
+  border: 1px solid var(--highlight-secondary);
+  padding: 12px;
+  text-align: center;
+  width: 100%;
+  border-radius: var(--radius-sm);
 }

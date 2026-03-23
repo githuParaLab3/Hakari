@@ -1,7 +1,19 @@
 <div class="global-wrapper">
   <header class="global-header">
-    <div class="brand">THREAD</div>
-    <button class="action-btn" (click)="logout()">[ LOGOUT ]</button>
+    <div class="brand-box" style="cursor: pointer;" routerLink="/">
+      <span class="brand-kanji">計</span>
+      <span class="brand-text">HAKARI</span>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" (click)="themeService.toggle()">
+        <span class="material-symbols-outlined">
+          {{ themeService.current === 'dark' ? 'light_mode' : 'dark_mode' }}
+        </span>
+      </button>
+      <button class="icon-btn" (click)="logout()">
+        <span class="material-symbols-outlined">logout</span>
+      </button>
+    </div>
   </header>
   <main class="global-content">
     <router-outlet></router-outlet>

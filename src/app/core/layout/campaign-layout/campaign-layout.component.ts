@@ -1,14 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ContextService } from '../../context.service';
 import { ThemeService } from '../../theme.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-campaign-layout',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './campaign-layout.component.html',
   styleUrls: ['./campaign-layout.component.css']
 })

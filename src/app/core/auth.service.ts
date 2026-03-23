@@ -8,9 +8,12 @@ export class AuthService {
   constructor(private supabaseService: SupabaseService) {}
 
   async signInWithGoogle() {
-    return this.supabaseService.client.auth.signInWithOAuth({
-      provider: 'google'
-    });
+      return this.supabaseService.client.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin + '/dashboard'
+        }
+      });
   }
 
   async signOut() {

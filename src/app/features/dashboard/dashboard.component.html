@@ -1,14 +1,22 @@
-<div class="dashboard-container">
-  <header class="dashboard-header">
-    <h2>SELECT CAMPAIGN</h2>
-    <button class="action-btn" (click)="createNewCampaign()">[ + NEW CAMPAIGN ]</button>
-  </header>
+<div class="page-container">
+  <div class="page-header">
+    <h2>Select Campaign</h2>
+    <button class="btn-primary" (click)="createNewCampaign()">
+      <span class="material-symbols-outlined">add</span>
+      New Campaign
+    </button>
+  </div>
 
   <div class="campaign-grid">
-    <div *ngFor="let campaign of campaigns" class="campaign-card" (click)="openCampaign(campaign.id)">
-      <h3>{{ campaign.name }}</h3>
-      <p>{{ campaign.description }}</p>
-      <span class="date">{{ campaign.created_at | date:'shortDate' }}</span>
+    <div *ngFor="let campaign of campaigns" class="hakari-card campaign-card" (click)="openCampaign(campaign.id)">
+      <h3 class="campaign-title">{{ campaign.name }}</h3>
+      <p class="campaign-desc">{{ campaign.description }}</p>
+      <span class="campaign-date">{{ campaign.created_at | date:'shortDate' }}</span>
     </div>
+  </div>
+
+  <div class="empty-state" *ngIf="campaigns.length === 0">
+    <span class="material-symbols-outlined">folder_off</span>
+    <p>No campaigns found.</p>
   </div>
 </div>
