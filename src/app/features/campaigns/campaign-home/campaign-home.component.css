@@ -1,0 +1,42 @@
+.campaign-home-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.section-header h2 {
+  color: var(--highlight-blue);
+}
+
+.id-tag {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--highlight-green);
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+.module-panel {
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  min-height: 300px;
+}
+
+.module-panel h3 {
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}

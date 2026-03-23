@@ -1,0 +1,29 @@
+<p>campaign-layout works!</p>
+<div class="campaign-wrapper">
+  <aside class="sidebar">
+    <div class="brand">THREAD</div>
+    <nav class="nav-menu">
+      <a routerLink="/dashboard" class="nav-item">Dashboard</a>
+      <a routerLink="./" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+      <a routerLink="sessions" class="nav-item" routerLinkActive="active">Sessions</a>
+      <a routerLink="notes" class="nav-item" routerLinkActive="active">Notes</a>
+      <a routerLink="npcs" class="nav-item" routerLinkActive="active">NPCs</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="top-bar">
+      <button class="action-btn" (click)="toggleSidePanel()">TOGGLE PANEL</button>
+    </header>
+    <div class="content-area">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+
+  <aside class="side-panel" [class.open]="isSidePanelOpen">
+    <div class="panel-header">CONTEXT</div>
+    <div class="panel-content">
+      <ng-content select="[side-panel-content]"></ng-content>
+    </div>
+  </aside>
+</div>

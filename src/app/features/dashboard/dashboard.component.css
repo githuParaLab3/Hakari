@@ -1,0 +1,50 @@
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.campaign-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.campaign-card {
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.campaign-card:hover {
+  border-color: var(--highlight-blue);
+  transform: translateY(-2px);
+}
+
+.campaign-card h3 {
+  color: var(--highlight-blue);
+  margin-bottom: 0.5rem;
+}
+
+.campaign-card p {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  opacity: 0.8;
+  margin-bottom: 1rem;
+}
+
+.date {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--highlight-green);
+}
