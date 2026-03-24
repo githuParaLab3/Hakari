@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { MapService } from '../map.service';
 import { ContextService } from '../../../../core/context.service';
 import { ModalComponent } from '../../../../shared/components/modal/modal.component';
+import { RealtimeSyncService } from '../../../../core/realtime-sync.service';
 
 @Component({
   selector: 'app-map-list',
@@ -13,26 +15,38 @@ import { ModalComponent } from '../../../../shared/components/modal/modal.compon
   templateUrl: './map-list.component.html',
   styleUrls: ['./map-list.component.css']
 })
-export class MapListComponent implements OnInit {
+export class MapListComponent implements OnInit, OnDestroy {
   maps: any[] = [];
   filteredMaps: any[] = [];
   campaignId: string | null = null;
   searchTerm: string = '';
-
   isModalOpen = false;
   formData = { name: '', type: 'Regional' };
+  private syncSub!: Subscription;
 
   constructor(
     private mapService: MapService,
     private route: ActivatedRoute,
     private router: Router,
-    private contextService: ContextService
+    private contextService: ContextService,
+    private realtimeSync: RealtimeSyncService
   ) {}
 
   async ngOnInit() {
     this.campaignId = this.route.parent?.snapshot.paramMap.get('id') || null;
     if (this.campaignId) {
       await this.loadMaps();
+    }
+    this.syncSub = this.realtimeSync.sync$.subscribe(async (event) => {
+      if (event.table === 'maps') {
+        await this.loadMaps();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.syncSub) {
+      this.syncSub.unsubscribe();
     }
   }
 
@@ -77,8 +91,8 @@ export class MapListComponent implements OnInit {
     this.router.navigate(['../map', mapId], { relativeTo: this.route });
   }
 
-  openInContext(event: Event, mapData: any) {
+  openInContext(event: Event, mapItem: any) {
     event.stopPropagation();
-    this.contextService.setContext({ type: 'map', data: mapData });
+    this.contextService.setContext({ type: 'map', data: mapItem });
   }
 }

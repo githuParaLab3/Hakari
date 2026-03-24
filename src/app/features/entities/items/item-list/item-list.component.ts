@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { ItemService } from '../item.service';
 import { ContextService } from '../../../../core/context.service';
 import { ModalComponent } from '../../../../shared/components/modal/modal.component';
+import { RealtimeSyncService } from '../../../../core/realtime-sync.service';
 
 @Component({
   selector: 'app-item-list',
@@ -13,26 +15,38 @@ import { ModalComponent } from '../../../../shared/components/modal/modal.compon
   templateUrl: './item-list.component.html',
   styleUrls: ['./item-list.component.css']
 })
-export class ItemListComponent implements OnInit {
+export class ItemListComponent implements OnInit, OnDestroy {
   items: any[] = [];
   filteredItems: any[] = [];
   campaignId: string | null = null;
   searchTerm: string = '';
-
   isModalOpen = false;
   formData = { name: '', value: 0 };
+  private syncSub!: Subscription;
 
   constructor(
     private itemService: ItemService,
     private route: ActivatedRoute,
     private router: Router,
-    private contextService: ContextService
+    private contextService: ContextService,
+    private realtimeSync: RealtimeSyncService
   ) {}
 
   async ngOnInit() {
     this.campaignId = this.route.parent?.snapshot.paramMap.get('id') || null;
     if (this.campaignId) {
       await this.loadItems();
+    }
+    this.syncSub = this.realtimeSync.sync$.subscribe(async (event) => {
+      if (event.table === 'items') {
+        await this.loadItems();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.syncSub) {
+      this.syncSub.unsubscribe();
     }
   }
 

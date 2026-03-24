@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { EncounterService } from '../encounter.service';
 import { ContextService } from '../../../../core/context.service';
 import { ModalComponent } from '../../../../shared/components/modal/modal.component';
+import { RealtimeSyncService } from '../../../../core/realtime-sync.service';
 
 @Component({
   selector: 'app-encounter-list',
@@ -13,26 +15,38 @@ import { ModalComponent } from '../../../../shared/components/modal/modal.compon
   templateUrl: './encounter-list.component.html',
   styleUrls: ['./encounter-list.component.css']
 })
-export class EncounterListComponent implements OnInit {
+export class EncounterListComponent implements OnInit, OnDestroy {
   encounters: any[] = [];
   filteredEncounters: any[] = [];
   campaignId: string | null = null;
   searchTerm: string = '';
-
   isModalOpen = false;
   formData = { name: '', difficulty: 'Medium' };
+  private syncSub!: Subscription;
 
   constructor(
     private encounterService: EncounterService,
     private route: ActivatedRoute,
     private router: Router,
-    private contextService: ContextService
+    private contextService: ContextService,
+    private realtimeSync: RealtimeSyncService
   ) {}
 
   async ngOnInit() {
     this.campaignId = this.route.parent?.snapshot.paramMap.get('id') || null;
     if (this.campaignId) {
       await this.loadEncounters();
+    }
+    this.syncSub = this.realtimeSync.sync$.subscribe(async (event) => {
+      if (event.table === 'encounters') {
+        await this.loadEncounters();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.syncSub) {
+      this.syncSub.unsubscribe();
     }
   }
 
@@ -51,9 +65,9 @@ export class EncounterListComponent implements OnInit {
       this.filteredEncounters = this.encounters;
       return;
     }
-    this.filteredEncounters = this.encounters.filter(encounter =>
-      encounter.name.toLowerCase().includes(term) ||
-      (encounter.difficulty && encounter.difficulty.toLowerCase().includes(term))
+    this.filteredEncounters = this.encounters.filter(enc =>
+      enc.name.toLowerCase().includes(term) ||
+      (enc.difficulty && enc.difficulty.toLowerCase().includes(term))
     );
   }
 
@@ -73,12 +87,12 @@ export class EncounterListComponent implements OnInit {
     await this.loadEncounters();
   }
 
-  openEncounter(encounterId: string) {
-    this.router.navigate(['../encounter', encounterId], { relativeTo: this.route });
+  openEncounter(encId: string) {
+    this.router.navigate(['../encounter', encId], { relativeTo: this.route });
   }
 
-  openInContext(event: Event, encounter: any) {
+  openInContext(event: Event, enc: any) {
     event.stopPropagation();
-    this.contextService.setContext({ type: 'encounter', data: encounter });
+    this.contextService.setContext({ type: 'encounter', data: enc });
   }
 }

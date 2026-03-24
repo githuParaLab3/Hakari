@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { CampaignService } from '../campaigns/campaign.service';
 import { AuthService } from '../../core/auth.service';
 import { ThemeService } from '../../core/theme.service';
 import { ModalComponent } from '../../shared/components/modal/modal.component';
+import { RealtimeSyncService } from '../../core/realtime-sync.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +16,7 @@ import { ModalComponent } from '../../shared/components/modal/modal.component';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   campaigns: any[] = [];
   filteredCampaigns: any[] = [];
   userId: string | undefined;
@@ -22,25 +24,39 @@ export class DashboardComponent implements OnInit {
 
   isModalOpen = false;
   formData = { name: '', description: '' };
+  private syncSub!: Subscription;
 
   constructor(
     private campaignService: CampaignService,
     private authService: AuthService,
     private router: Router,
-    public themeService: ThemeService
+    public themeService: ThemeService,
+    private realtimeSync: RealtimeSyncService
   ) {}
 
   async ngOnInit() {
     const { data } = await this.authService.session;
     this.userId = data.session?.user.id;
     await this.loadCampaigns();
+
+    this.syncSub = this.realtimeSync.sync$.subscribe(async (event) => {
+      if (event.table === 'campaigns') {
+        await this.loadCampaigns();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.syncSub) {
+      this.syncSub.unsubscribe();
+    }
   }
 
   async loadCampaigns() {
     const { data, error } = await this.campaignService.getCampaigns();
     if (data) {
       this.campaigns = data;
-      this.filteredCampaigns = data;
+      this.filterData();
     }
   }
 
@@ -69,7 +85,6 @@ export class DashboardComponent implements OnInit {
     if (!this.userId || !this.formData.name.trim()) return;
     await this.campaignService.createCampaign(this.formData.name, this.formData.description, this.userId);
     this.closeModal();
-    await this.loadCampaigns();
   }
 
   openCampaign(id: string) {

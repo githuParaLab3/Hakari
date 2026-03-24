@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { NoteService } from '../note.service';
 import { ContextService } from '../../../core/context.service';
 import { ModalComponent } from '../../../shared/components/modal/modal.component';
+import { RealtimeSyncService } from '../../../core/realtime-sync.service';
 
 @Component({
   selector: 'app-note-list',
@@ -13,7 +15,7 @@ import { ModalComponent } from '../../../shared/components/modal/modal.component
   templateUrl: './note-list.component.html',
   styleUrls: ['./note-list.component.css']
 })
-export class NoteListComponent implements OnInit {
+export class NoteListComponent implements OnInit, OnDestroy {
   notes: any[] = [];
   filteredNotes: any[] = [];
   campaignId: string | null = null;
@@ -22,17 +24,32 @@ export class NoteListComponent implements OnInit {
   isModalOpen = false;
   formData = { title: '', type: 'lore' };
 
+  private syncSub!: Subscription;
+
   constructor(
     private noteService: NoteService,
     private route: ActivatedRoute,
     private router: Router,
-    private contextService: ContextService
+    private contextService: ContextService,
+    private realtimeSync: RealtimeSyncService
   ) {}
 
   async ngOnInit() {
     this.campaignId = this.route.parent?.snapshot.paramMap.get('id') || null;
     if (this.campaignId) {
       await this.loadNotes();
+    }
+
+    this.syncSub = this.realtimeSync.sync$.subscribe(async (event) => {
+      if (event.table === 'notes') {
+        await this.loadNotes();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.syncSub) {
+      this.syncSub.unsubscribe();
     }
   }
 

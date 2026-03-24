@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { LocationService } from '../location.service';
 import { ContextService } from '../../../../core/context.service';
 import { ModalComponent } from '../../../../shared/components/modal/modal.component';
+import { RealtimeSyncService } from '../../../../core/realtime-sync.service';
 
 @Component({
   selector: 'app-location-list',
@@ -13,26 +15,38 @@ import { ModalComponent } from '../../../../shared/components/modal/modal.compon
   templateUrl: './location-list.component.html',
   styleUrls: ['./location-list.component.css']
 })
-export class LocationListComponent implements OnInit {
+export class LocationListComponent implements OnInit, OnDestroy {
   locations: any[] = [];
   filteredLocations: any[] = [];
   campaignId: string | null = null;
   searchTerm: string = '';
-
   isModalOpen = false;
   formData = { name: '', type: '' };
+  private syncSub!: Subscription;
 
   constructor(
     private locationService: LocationService,
     private route: ActivatedRoute,
     private router: Router,
-    private contextService: ContextService
+    private contextService: ContextService,
+    private realtimeSync: RealtimeSyncService
   ) {}
 
   async ngOnInit() {
     this.campaignId = this.route.parent?.snapshot.paramMap.get('id') || null;
     if (this.campaignId) {
       await this.loadLocations();
+    }
+    this.syncSub = this.realtimeSync.sync$.subscribe(async (event) => {
+      if (event.table === 'locations') {
+        await this.loadLocations();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.syncSub) {
+      this.syncSub.unsubscribe();
     }
   }
 
@@ -51,9 +65,9 @@ export class LocationListComponent implements OnInit {
       this.filteredLocations = this.locations;
       return;
     }
-    this.filteredLocations = this.locations.filter(location =>
-      location.name.toLowerCase().includes(term) ||
-      (location.type && location.type.toLowerCase().includes(term))
+    this.filteredLocations = this.locations.filter(loc =>
+      loc.name.toLowerCase().includes(term) ||
+      (loc.type && loc.type.toLowerCase().includes(term))
     );
   }
 
@@ -73,12 +87,12 @@ export class LocationListComponent implements OnInit {
     await this.loadLocations();
   }
 
-  openLocation(locationId: string) {
-    this.router.navigate(['../location', locationId], { relativeTo: this.route });
+  openLocation(locId: string) {
+    this.router.navigate(['../location', locId], { relativeTo: this.route });
   }
 
-  openInContext(event: Event, location: any) {
+  openInContext(event: Event, loc: any) {
     event.stopPropagation();
-    this.contextService.setContext({ type: 'location', data: location });
+    this.contextService.setContext({ type: 'location', data: loc });
   }
 }
