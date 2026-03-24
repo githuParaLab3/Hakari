@@ -60,18 +60,23 @@
     <header class="top-bar">
       <div class="top-left">
         <button class="icon-btn" (click)="toggleSidebar()">
-          <span class="material-symbols-outlined">
-            {{ isSidebarCollapsed ? 'menu' : 'menu_open' }}
-          </span>
+          <span class="material-symbols-outlined">{{ isSidebarCollapsed ? 'menu' : 'menu_open' }}</span>
         </button>
         <button class="icon-btn" (click)="themeService.toggle()">
-          <span class="material-symbols-outlined">
-            {{ themeService.current === 'dark' ? 'light_mode' : 'dark_mode' }}
-          </span>
+          <span class="material-symbols-outlined">{{ themeService.current === 'dark' ? 'light_mode' : 'dark_mode' }}</span>
         </button>
       </div>
 
-      <div class="top-right" style="margin-left: auto;">
+      <div class="top-right">
+        <div class="global-search-container">
+          <span class="material-symbols-outlined search-icon">search</span>
+          <input 
+            type="text" 
+            placeholder="COMMAND CENTER [Ctrl+K]" 
+            class="global-search-input"
+            [(ngModel)]="globalSearchTerm"
+            (input)="onSearchInput()">
+        </div>
         <button class="icon-btn" (click)="toggleSidePanel()" [class.active]="isSidePanelOpen">
           <span class="material-symbols-outlined">right_panel_open</span>
         </button>
@@ -87,20 +92,44 @@
     <div class="panel-header">
       <div class="panel-title-group">
         <span class="material-symbols-outlined">memory</span>
-        <span>CONTEXT MANAGER</span>
+        <span>{{ globalSearchTerm ? 'SEARCH RESULTS' : 'CONTEXT MANAGER' }}</span>
       </div>
       <button class="close-btn" (click)="closePanel()">
         <span class="material-symbols-outlined">close</span>
       </button>
     </div>
-    <div class="panel-content" *ngIf="activeContext">
+
+    <div class="panel-content" *ngIf="globalSearchTerm.length > 0">
+      <div *ngIf="isSearching" class="search-status">SCANNING DATABASE...</div>
+      
+      <div *ngIf="!isSearching && searchResults.length === 0" class="search-status">
+        NO ENTITIES FOUND.
+      </div>
+
+      <div class="search-results-list" *ngIf="!isSearching && searchResults.length > 0">
+        <div 
+          *ngFor="let result of searchResults" 
+          class="search-result-card"
+          (click)="openSearchResult(result)">
+          <div class="result-badge">{{ result.type | uppercase }}</div>
+          <h4>{{ result.title }}</h4>
+          <span class="result-sub" *ngIf="result.subtitle">{{ result.subtitle }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-content" *ngIf="activeContext && !globalSearchTerm">
       <div class="context-type hakari-badge">{{ activeContext.type | uppercase }}</div>
       <h3 class="context-title">{{ activeContext.data.name || activeContext.data.title }}</h3>
       
-      <div class="context-meta" *ngIf="activeContext.data.role || activeContext.data.status">
+      <div class="context-meta" *ngIf="activeContext.data.role || activeContext.data.status || activeContext.data.type">
         <div class="meta-row" *ngIf="activeContext.data.role">
           <span class="meta-label">ROLE</span>
           <span class="meta-value">{{ activeContext.data.role }}</span>
+        </div>
+        <div class="meta-row" *ngIf="activeContext.data.type && activeContext.type !== 'location'">
+          <span class="meta-label">TYPE</span>
+          <span class="meta-value">{{ activeContext.data.type }}</span>
         </div>
         <div class="meta-row" *ngIf="activeContext.data.status">
           <span class="meta-label">STATUS</span>
