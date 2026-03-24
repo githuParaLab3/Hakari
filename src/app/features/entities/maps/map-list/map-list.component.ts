@@ -4,11 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MapService } from '../map.service';
 import { ContextService } from '../../../../core/context.service';
+import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-map-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ModalComponent],
   templateUrl: './map-list.component.html',
   styleUrls: ['./map-list.component.css']
 })
@@ -17,6 +18,9 @@ export class MapListComponent implements OnInit {
   filteredMaps: any[] = [];
   campaignId: string | null = null;
   searchTerm: string = '';
+
+  isModalOpen = false;
+  formData = { name: '', type: 'Regional' };
 
   constructor(
     private mapService: MapService,
@@ -53,12 +57,19 @@ export class MapListComponent implements OnInit {
     );
   }
 
-  async createNewMap() {
-    if (!this.campaignId) return;
-    const name = prompt('Nome do Mapa:');
-    if (!name) return;
-    const type = prompt('Tipo (Regional, Dungeon, Cidade):') || 'Regional';
-    await this.mapService.createMap(this.campaignId, name, type);
+  openModal() {
+    this.formData = { name: '', type: 'Regional' };
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  async confirmModal() {
+    if (!this.campaignId || !this.formData.name.trim()) return;
+    await this.mapService.createMap(this.campaignId, this.formData.name, this.formData.type);
+    this.closeModal();
     await this.loadMaps();
   }
 

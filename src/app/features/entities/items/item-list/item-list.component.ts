@@ -4,11 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ItemService } from '../item.service';
 import { ContextService } from '../../../../core/context.service';
+import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-item-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ModalComponent],
   templateUrl: './item-list.component.html',
   styleUrls: ['./item-list.component.css']
 })
@@ -17,6 +18,9 @@ export class ItemListComponent implements OnInit {
   filteredItems: any[] = [];
   campaignId: string | null = null;
   searchTerm: string = '';
+
+  isModalOpen = false;
+  formData = { name: '', value: 0 };
 
   constructor(
     private itemService: ItemService,
@@ -52,13 +56,19 @@ export class ItemListComponent implements OnInit {
     );
   }
 
-  async createNewItem() {
-    if (!this.campaignId) return;
-    const name = prompt('Nome do Item:');
-    if (!name) return;
-    const valueStr = prompt('Valor (ouro):') || '0';
-    const value = parseFloat(valueStr) || 0;
-    await this.itemService.createItem(this.campaignId, name, value);
+  openModal() {
+    this.formData = { name: '', value: 0 };
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  async confirmModal() {
+    if (!this.campaignId || !this.formData.name.trim()) return;
+    await this.itemService.createItem(this.campaignId, this.formData.name, this.formData.value);
+    this.closeModal();
     await this.loadItems();
   }
 

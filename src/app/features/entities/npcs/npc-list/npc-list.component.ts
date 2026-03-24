@@ -4,19 +4,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NpcService } from '../npc.service';
 import { ContextService } from '../../../../core/context.service';
+import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-npc-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ModalComponent],
   templateUrl: './npc-list.component.html',
   styleUrls: ['./npc-list.component.css']
 })
 export class NpcListComponent implements OnInit {
   npcs: any[] = [];
-  filteredNpcs: any[] = [];
   campaignId: string | null = null;
-  searchTerm: string = '';
+
+  isModalOpen = false;
+  formData = { name: '', role: '' };
 
   constructor(
     private npcService: NpcService,
@@ -27,38 +29,28 @@ export class NpcListComponent implements OnInit {
 
   async ngOnInit() {
     this.campaignId = this.route.parent?.snapshot.paramMap.get('id') || null;
-    if (this.campaignId) {
-      await this.loadNpcs();
-    }
+    if (this.campaignId) await this.loadNpcs();
   }
 
   async loadNpcs() {
     if (!this.campaignId) return;
     const { data } = await this.npcService.getNpcs(this.campaignId);
-    if (data) {
-      this.npcs = data;
-      this.filteredNpcs = data;
-    }
+    if (data) this.npcs = data;
   }
 
-  filterData() {
-    const term = this.searchTerm.toLowerCase().trim();
-    if (!term) {
-      this.filteredNpcs = this.npcs;
-      return;
-    }
-    this.filteredNpcs = this.npcs.filter(npc =>
-      npc.name.toLowerCase().includes(term) ||
-      (npc.role && npc.role.toLowerCase().includes(term))
-    );
+  openModal() {
+    this.formData = { name: '', role: '' };
+    this.isModalOpen = true;
   }
 
-  async createNewNpc() {
-    if (!this.campaignId) return;
-    const name = prompt('Nome do NPC:');
-    if (!name) return;
-    const role = prompt('Papel (ex: Mercador, Vilão):') || '';
-    await this.npcService.createNpc(this.campaignId, name, role);
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  async confirmModal() {
+    if (!this.campaignId || !this.formData.name.trim()) return;
+    await this.npcService.createNpc(this.campaignId, this.formData.name, this.formData.role);
+    this.closeModal();
     await this.loadNpcs();
   }
 

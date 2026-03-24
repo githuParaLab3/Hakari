@@ -4,11 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { LocationService } from '../location.service';
 import { ContextService } from '../../../../core/context.service';
+import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-location-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ModalComponent],
   templateUrl: './location-list.component.html',
   styleUrls: ['./location-list.component.css']
 })
@@ -17,6 +18,9 @@ export class LocationListComponent implements OnInit {
   filteredLocations: any[] = [];
   campaignId: string | null = null;
   searchTerm: string = '';
+
+  isModalOpen = false;
+  formData = { name: '', type: '' };
 
   constructor(
     private locationService: LocationService,
@@ -53,12 +57,19 @@ export class LocationListComponent implements OnInit {
     );
   }
 
-  async createNewLocation() {
-    if (!this.campaignId) return;
-    const name = prompt('Nome do Local:');
-    if (!name) return;
-    const type = prompt('Tipo (ex: Cidade, Masmorra, Taverna):') || '';
-    await this.locationService.createLocation(this.campaignId, name, type);
+  openModal() {
+    this.formData = { name: '', type: '' };
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  async confirmModal() {
+    if (!this.campaignId || !this.formData.name.trim()) return;
+    await this.locationService.createLocation(this.campaignId, this.formData.name, this.formData.type);
+    this.closeModal();
     await this.loadLocations();
   }
 

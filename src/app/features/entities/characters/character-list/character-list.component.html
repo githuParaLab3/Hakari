@@ -11,7 +11,7 @@
           [(ngModel)]="searchTerm"
           (input)="filterData()">
       </div>
-      <button class="action-btn" (click)="createNewCharacter()">[ + NEW CHARACTER ]</button>
+      <button class="action-btn" (click)="openModal()">[ + NEW CHARACTER ]</button>
     </div>
   </header>
 
@@ -30,3 +30,14 @@
     <p>NO RECORDS FOUND.</p>
   </div>
 </div>
+
+<app-modal *ngIf="isModalOpen" title="NEW CHARACTER" (close)="closeModal()" (confirm)="confirmModal()">
+  <div class="hakari-form-group">
+    <label>CHARACTER NAME</label>
+    <input type="text" class="hakari-input" [(ngModel)]="formData.name" placeholder="Enter name...">
+  </div>
+  <div class="hakari-form-group">
+    <label>CLASS</label>
+    <input type="text" class="hakari-input" [(ngModel)]="formData.charClass" placeholder="e.g. Wizard, Fighter...">
+  </div>
+</app-modal>

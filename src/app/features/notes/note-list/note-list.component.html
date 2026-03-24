@@ -11,7 +11,7 @@
           [(ngModel)]="searchTerm"
           (input)="filterData()">
       </div>
-      <button class="action-btn" (click)="createNewNote()">[ + NEW NOTE ]</button>
+      <button class="action-btn" (click)="openModal()">[ + NEW NOTE ]</button>
     </div>
   </header>
 
@@ -30,3 +30,19 @@
     <p>NO RECORDS FOUND.</p>
   </div>
 </div>
+
+<app-modal *ngIf="isModalOpen" title="NEW NOTE" (close)="closeModal()" (confirm)="confirmModal()">
+  <div class="hakari-form-group">
+    <label>TITLE</label>
+    <input type="text" class="hakari-input" [(ngModel)]="formData.title" placeholder="Enter title...">
+  </div>
+  <div class="hakari-form-group">
+    <label>TYPE</label>
+    <select class="hakari-input" [(ngModel)]="formData.type">
+      <option value="lore">Lore</option>
+      <option value="event">Event</option>
+      <option value="consequence">Consequence</option>
+      <option value="idea">Idea</option>
+    </select>
+  </div>
+</app-modal>

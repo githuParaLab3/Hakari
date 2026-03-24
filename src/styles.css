@@ -124,3 +124,45 @@ input:focus, select:focus, textarea:focus {
   position: relative;
   overflow: hidden;
 }
+
+.hakari-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.hakari-form-group label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.1em;
+}
+
+.hakari-input {
+  background-color: var(--surface-hover);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 10px 12px;
+  font-family: var(--font-primary);
+  font-size: 0.9rem;
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.hakari-input:focus {
+  border-color: var(--highlight-primary);
+}
+
+select.hakari-input {
+  appearance: none;
+  cursor: pointer;
+}
+
+textarea.hakari-input {
+  resize: vertical;
+  min-height: 80px;
+}

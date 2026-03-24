@@ -11,7 +11,7 @@
           [(ngModel)]="searchTerm"
           (input)="filterData()">
       </div>
-      <button class="action-btn" (click)="createNewResource()">[ + NEW RESOURCE ]</button>
+      <button class="action-btn" (click)="openModal()">[ + NEW RESOURCE ]</button>
     </div>
   </header>
 
@@ -29,3 +29,18 @@
     <p>NO RECORDS FOUND.</p>
   </div>
 </div>
+
+<app-modal *ngIf="isModalOpen" title="NEW RESOURCE" (close)="closeModal()" (confirm)="confirmModal()">
+  <div class="hakari-form-group">
+    <label>RESOURCE TITLE</label>
+    <input type="text" class="hakari-input" [(ngModel)]="formData.title" placeholder="Enter resource title...">
+  </div>
+  <div class="hakari-form-group">
+    <label>TYPE</label>
+    <select class="hakari-input" [(ngModel)]="formData.type">
+      <option value="URL">URL Link</option>
+      <option value="PDF">PDF Document</option>
+      <option value="Image">Image</option>
+    </select>
+  </div>
+</app-modal>

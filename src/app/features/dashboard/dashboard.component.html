@@ -11,7 +11,7 @@
           [(ngModel)]="searchTerm"
           (input)="filterData()">
       </div>
-      <button class="btn-primary" (click)="createNewCampaign()">
+      <button class="btn-primary" (click)="openModal()">
         <span class="material-symbols-outlined">add</span>
         New Campaign
       </button>
@@ -31,3 +31,14 @@
     <p>No campaigns found.</p>
   </div>
 </div>
+
+<app-modal *ngIf="isModalOpen" title="NEW CAMPAIGN" (close)="closeModal()" (confirm)="confirmModal()">
+  <div class="hakari-form-group">
+    <label>CAMPAIGN NAME</label>
+    <input type="text" class="hakari-input" [(ngModel)]="formData.name" placeholder="Enter campaign name...">
+  </div>
+  <div class="hakari-form-group">
+    <label>DESCRIPTION</label>
+    <textarea class="hakari-input" [(ngModel)]="formData.description" placeholder="Brief description..."></textarea>
+  </div>
+</app-modal>

@@ -4,11 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ResourceService } from '../resource.service';
 import { ContextService } from '../../../core/context.service';
+import { ModalComponent } from '../../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-resource-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ModalComponent],
   templateUrl: './resource-list.component.html',
   styleUrls: ['./resource-list.component.css']
 })
@@ -17,6 +18,9 @@ export class ResourceListComponent implements OnInit {
   filteredResources: any[] = [];
   campaignId: string | null = null;
   searchTerm: string = '';
+
+  isModalOpen = false;
+  formData = { title: '', type: 'URL' };
 
   constructor(
     private resourceService: ResourceService,
@@ -53,12 +57,19 @@ export class ResourceListComponent implements OnInit {
     );
   }
 
-  async createNewResource() {
-    if (!this.campaignId) return;
-    const title = prompt('Título do Recurso:');
-    if (!title) return;
-    const type = prompt('Tipo (PDF, URL, Image):') || 'URL';
-    await this.resourceService.createResource(this.campaignId, title, type);
+  openModal() {
+    this.formData = { title: '', type: 'URL' };
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  async confirmModal() {
+    if (!this.campaignId || !this.formData.title.trim()) return;
+    await this.resourceService.createResource(this.campaignId, this.formData.title, this.formData.type);
+    this.closeModal();
     await this.loadResources();
   }
 

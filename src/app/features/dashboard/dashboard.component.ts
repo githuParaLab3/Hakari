@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { CampaignService } from '../campaigns/campaign.service';
 import { AuthService } from '../../core/auth.service';
 import { ThemeService } from '../../core/theme.service';
+import { ModalComponent } from '../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ModalComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
@@ -18,6 +19,9 @@ export class DashboardComponent implements OnInit {
   filteredCampaigns: any[] = [];
   userId: string | undefined;
   searchTerm: string = '';
+
+  isModalOpen = false;
+  formData = { name: '', description: '' };
 
   constructor(
     private campaignService: CampaignService,
@@ -52,13 +56,19 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  async createNewCampaign() {
-    if (!this.userId) return;
-    const name = prompt('Nome da campanha:');
-    if (!name) return;
-    
-    const description = prompt('Descrição:');
-    await this.campaignService.createCampaign(name, description || '', this.userId);
+  openModal() {
+    this.formData = { name: '', description: '' };
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  async confirmModal() {
+    if (!this.userId || !this.formData.name.trim()) return;
+    await this.campaignService.createCampaign(this.formData.name, this.formData.description, this.userId);
+    this.closeModal();
     await this.loadCampaigns();
   }
 

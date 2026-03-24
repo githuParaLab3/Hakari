@@ -1,6 +1,6 @@
 <div class="board-container">
   <div class="board-toolbar">
-    <button class="action-btn" (click)="addNode()">[ + ADD NODE ]</button>
+    <button class="action-btn" (click)="openModal()">[ + ADD NODE ]</button>
   </div>
   <div class="board-canvas">
     <div 
@@ -13,3 +13,10 @@
     </div>
   </div>
 </div>
+
+<app-modal *ngIf="isModalOpen" title="NEW NODE" (close)="closeModal()" (confirm)="confirmModal()">
+  <div class="hakari-form-group">
+    <label>NODE TITLE</label>
+    <input type="text" class="hakari-input" [(ngModel)]="formData.title" placeholder="Enter node title...">
+  </div>
+</app-modal>

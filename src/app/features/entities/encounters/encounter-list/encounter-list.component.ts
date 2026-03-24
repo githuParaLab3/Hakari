@@ -4,11 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { EncounterService } from '../encounter.service';
 import { ContextService } from '../../../../core/context.service';
+import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-encounter-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ModalComponent],
   templateUrl: './encounter-list.component.html',
   styleUrls: ['./encounter-list.component.css']
 })
@@ -17,6 +18,9 @@ export class EncounterListComponent implements OnInit {
   filteredEncounters: any[] = [];
   campaignId: string | null = null;
   searchTerm: string = '';
+
+  isModalOpen = false;
+  formData = { name: '', difficulty: 'Medium' };
 
   constructor(
     private encounterService: EncounterService,
@@ -53,12 +57,19 @@ export class EncounterListComponent implements OnInit {
     );
   }
 
-  async createNewEncounter() {
-    if (!this.campaignId) return;
-    const name = prompt('Nome do Encontro:');
-    if (!name) return;
-    const difficulty = prompt('Dificuldade:') || 'Medium';
-    await this.encounterService.createEncounter(this.campaignId, name, difficulty);
+  openModal() {
+    this.formData = { name: '', difficulty: 'Medium' };
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  async confirmModal() {
+    if (!this.campaignId || !this.formData.name.trim()) return;
+    await this.encounterService.createEncounter(this.campaignId, this.formData.name, this.formData.difficulty);
+    this.closeModal();
     await this.loadEncounters();
   }
 

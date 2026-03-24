@@ -1,21 +1,27 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { SessionBoardService } from '../session-board.service';
+import { ModalComponent } from '../../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-session-board',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, ModalComponent],
   templateUrl: './session-board.component.html',
   styleUrls: ['./session-board.component.css']
 })
 export class SessionBoardComponent implements OnInit {
   @Input() sessionId!: string;
   nodes: any[] = [];
+  
   isDragging = false;
   draggedNode: any = null;
   offsetX = 0;
   offsetY = 0;
+
+  isModalOpen = false;
+  formData = { title: '' };
 
   constructor(private boardService: SessionBoardService) {}
 
@@ -32,13 +38,22 @@ export class SessionBoardComponent implements OnInit {
     }
   }
 
-  async addNode() {
-    const title = prompt('Título do nó:');
-    if (!title) return;
-    const { data } = await this.boardService.saveNode(this.sessionId, title, 50, 50);
+  openModal() {
+    this.formData = { title: '' };
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  async confirmModal() {
+    if (!this.formData.title.trim()) return;
+    const { data } = await this.boardService.saveNode(this.sessionId, this.formData.title, 50, 50);
     if (data) {
       this.nodes.push(data[0]);
     }
+    this.closeModal();
   }
 
   onMouseDown(event: MouseEvent, node: any) {

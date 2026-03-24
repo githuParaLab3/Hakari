@@ -4,11 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CharacterService } from '../character.service';
 import { ContextService } from '../../../../core/context.service';
+import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-character-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ModalComponent],
   templateUrl: './character-list.component.html',
   styleUrls: ['./character-list.component.css']
 })
@@ -17,6 +18,9 @@ export class CharacterListComponent implements OnInit {
   filteredCharacters: any[] = [];
   campaignId: string | null = null;
   searchTerm: string = '';
+
+  isModalOpen = false;
+  formData = { name: '', charClass: '' };
 
   constructor(
     private characterService: CharacterService,
@@ -53,12 +57,19 @@ export class CharacterListComponent implements OnInit {
     );
   }
 
-  async createNewCharacter() {
-    if (!this.campaignId) return;
-    const name = prompt('Nome do Personagem:');
-    if (!name) return;
-    const charClass = prompt('Classe:') || '';
-    await this.characterService.createCharacter(this.campaignId, name, charClass);
+  openModal() {
+    this.formData = { name: '', charClass: '' };
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  async confirmModal() {
+    if (!this.campaignId || !this.formData.name.trim()) return;
+    await this.characterService.createCharacter(this.campaignId, this.formData.name, this.formData.charClass);
+    this.closeModal();
     await this.loadCharacters();
   }
 

@@ -11,7 +11,7 @@
           [(ngModel)]="searchTerm"
           (input)="filterData()">
       </div>
-      <button class="action-btn" (click)="createNewLocation()">[ + NEW LOCATION ]</button>
+      <button class="action-btn" (click)="openModal()">[ + NEW LOCATION ]</button>
     </div>
   </header>
 
@@ -29,3 +29,14 @@
     <p>NO RECORDS FOUND.</p>
   </div>
 </div>
+
+<app-modal *ngIf="isModalOpen" title="NEW LOCATION" (close)="closeModal()" (confirm)="confirmModal()">
+  <div class="hakari-form-group">
+    <label>LOCATION NAME</label>
+    <input type="text" class="hakari-input" [(ngModel)]="formData.name" placeholder="Enter location name...">
+  </div>
+  <div class="hakari-form-group">
+    <label>TYPE</label>
+    <input type="text" class="hakari-input" [(ngModel)]="formData.type" placeholder="e.g. City, Dungeon, Tavern...">
+  </div>
+</app-modal>
