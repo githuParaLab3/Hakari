@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/auth.guard';
+import { campaignGuard } from './core/campaign.guard';
 import { LayoutComponent } from './core/layout/layout.component';
 import { CampaignLayoutComponent } from './core/layout/campaign-layout/campaign-layout.component';
 
@@ -27,7 +28,7 @@ export const routes: Routes = [
   {
     path: 'campaign/:id',
     component: CampaignLayoutComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, campaignGuard],
     children: [
       {
         path: '',

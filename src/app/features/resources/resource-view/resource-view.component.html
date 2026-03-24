@@ -1,12 +1,23 @@
 <div class="resource-view-container" *ngIf="resource">
-  <div class="profile-panel">
-    <header class="resource-header">
-      <input type="text" [(ngModel)]="resource.title" class="title-input">
-      <input type="text" [(ngModel)]="resource.type" placeholder="Type..." class="type-input">
-    </header>
-    <div class="inputs-wrapper">
-      <input type="text" [(ngModel)]="resource.external_url" placeholder="External URL..." class="data-input">
-      <textarea [(ngModel)]="resource.description" placeholder="Description..." class="description-area"></textarea>
+  <header class="view-header">
+    <div class="meta-info">
+      <span class="resource-type">{{ resource.type }}</span>
+    </div>
+    <input type="text" class="title-input" [(ngModel)]="resource.title" (change)="saveResource()">
+  </header>
+
+  <div class="view-content">
+    <div class="hakari-form-group">
+      <label>SOURCE URL / CONTENT PATH</label>
+      <input type="text" class="hakari-input" [(ngModel)]="resource.content" (change)="saveResource()" placeholder="https://...">
+    </div>
+
+    <div class="resource-preview" *ngIf="resource.content && (resource.type === 'URL' || resource.type === 'PDF')">
+      <iframe [src]="resource.content | safeUrl" width="100%" height="700px" frameborder="0" style="border-radius: var(--radius-sm); border: 1px solid var(--border-color);"></iframe>
+    </div>
+
+    <div class="resource-preview" *ngIf="resource.content && resource.type === 'Image'">
+      <img [src]="resource.content" alt="Resource content" style="max-width: 100%; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
     </div>
   </div>
 </div>

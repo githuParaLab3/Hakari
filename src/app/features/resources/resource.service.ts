@@ -15,7 +15,7 @@ export class ResourceService {
       .order('title', { ascending: true });
   }
 
-  async getResource(id: string) {
+  async getResourceById(id: string) {
     return this.supabaseService.client
       .from('resources')
       .select('*')
@@ -28,5 +28,20 @@ export class ResourceService {
       .from('resources')
       .insert([{ campaign_id: campaignId, title, type }])
       .select();
+  }
+
+  async updateResource(id: string, updates: any) {
+    return this.supabaseService.client
+      .from('resources')
+      .update(updates)
+      .eq('id', id)
+      .select();
+  }
+
+  async deleteResource(id: string) {
+    return this.supabaseService.client
+      .from('resources')
+      .delete()
+      .eq('id', id);
   }
 }
