@@ -4,9 +4,9 @@
       <span class="brand-kanji">計</span>
       <span class="brand-text">HAKARI</span>
     </div>
-    <button class="icon-btn" (click)="themeService.toggle()">
+    <button class="icon-btn" (click)="themeService.toggleTheme()">
       <span class="material-symbols-outlined">
-        {{ themeService.current === 'dark' ? 'light_mode' : 'dark_mode' }}
+        {{ themeService.isDarkMode ? 'light_mode' : 'dark_mode' }}
       </span>
     </button>
   </header>

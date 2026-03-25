@@ -5,9 +5,9 @@
       <span class="brand-text">HAKARI</span>
     </div>
     <nav class="topbar-nav">
-      <button class="icon-btn" (click)="themeService.toggle()">
+      <button class="icon-btn" (click)="themeService.toggleTheme()">
         <span class="material-symbols-outlined">
-          {{ themeService.current === 'dark' ? 'light_mode' : 'dark_mode' }}
+          {{ themeService.isDarkMode ? 'light_mode' : 'dark_mode' }}
         </span>
       </button>
       <button *ngIf="!isLoggedIn" class="btn-primary" routerLink="/login">Get Started</button>
